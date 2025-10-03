@@ -62,7 +62,7 @@ function UpdateTableSize(_table: Table)
 	local padding = 0
 	
 	_table.TotalY = #_table.Objects * (obj_height + padding)
-	linked.Size = UDim2.new(linked.Size.X.Scale, 0, 0, _table.TotalY*2)
+	linked.Size = UDim2.new(linked.Size.X.Scale, 0, 0, _table.TotalY*2.5)
 end
 
 function UpdateToggle(_toggle: Toggle)
@@ -466,14 +466,14 @@ function lib:CreateWindow(params: {Title: string, ToggleBind: string})
 	Holder.Name = "Holder"
 	Holder.Parent = Contents
 	Holder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	Holder.BackgroundTransparency = 1.000
+	Holder.BackgroundTransparency = 1
 	Holder.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	Holder.BorderSizePixel = 0
-	Holder.Position = UDim2.new(0.045454409, 0, 0, 0)
-	Holder.Size = UDim2.new(0.909090996, 0, 1, 0)
+	Holder.Position = UDim2.new(0.045, 0, .07, 0)
+	Holder.Size = UDim2.new(0.909090996, 0, .75, 0)
 
 	UIListLayout_3.Parent = Holder
-	UIListLayout_3.Padding = UDim.new(.025, 0)
+	UIListLayout_3.Padding = UDim.new(0, 0)
 	UIListLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
 
 	UICorner_11.Parent = Contents
