@@ -1,0 +1,870 @@
+local tween_service = game:GetService("TweenService")
+
+export type Tab = {
+	Icon: string;
+	Linked: Frame;
+	Title: string;
+	Objects: {}
+}
+
+export type Table = {
+	Icon: string;
+	Linked: Frame;
+	Title: string;
+	TotalY: number;
+	Objects: {}
+}
+
+export type Toggle = {
+	Linked: Frame;
+	Title: string;
+	Value: boolean;
+	Callback: () -> any;
+}
+
+export type Slider = {
+	Linked: Frame;
+	Title: string;
+	Measurement: string;
+	Min: number;
+	Max: number;
+	Step: number;
+	Value: number;
+	Callback: () -> any;
+}
+
+export type Dropdown = {
+	Linked: Frame;
+	Title: string;
+	Options: {any};
+	Value: string;
+	Callback: () -> any;
+}
+
+export type Option = {
+	Linked: Frame;
+	Title: string;
+	Value: any;
+}
+
+local lib = {}
+lib.__index = lib
+
+local self = setmetatable({}, lib)
+self.UI = nil
+self.Templates = nil
+lib.Tables = {}
+lib.Flags = {}
+
+function UpdateTableSize(_table: Table)
+	local linked = _table.Linked
+	local obj_height = 40
+	local padding = 0
+	
+	_table.TotalY = #_table.Objects * (obj_height + padding)
+	linked.Size = UDim2.new(linked.Size.X.Scale, 0, 0, _table.TotalY*1.35)
+end
+
+function UpdateToggle(_toggle: Toggle)
+	local linked = _toggle.Linked
+	_toggle.Value = not _toggle.Value
+	local background_transparency = _toggle.Value and 0 or .95
+	
+	local update_info = TweenInfo.new(.25, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
+	
+	tween_service:Create(linked.Toggle, update_info, {BackgroundTransparency = background_transparency}):Play()
+end
+
+function lib:CreateWindow(params: {Title: string, ToggleBind: string})
+	-- Instances:
+
+	local ScreenGui = Instance.new("ScreenGui")
+	local Main = Instance.new("Frame")
+	local UICorner = Instance.new("UICorner")
+	local TopBar = Instance.new("Frame")
+	local UICorner_2 = Instance.new("UICorner")
+	local Frame = Instance.new("Frame")
+	local Title = Instance.new("TextLabel")
+	local TabHolder = Instance.new("Frame")
+	local UICorner_3 = Instance.new("UICorner")
+	local ScrollingFrame = Instance.new("ScrollingFrame")
+	local UIListLayout = Instance.new("UIListLayout")
+	local Tabs = Instance.new("Frame")
+	local UIListLayout_2 = Instance.new("UIListLayout")
+	local Templates = Instance.new("Folder")
+	local TabTemplate = Instance.new("Frame")
+	local UICorner_4 = Instance.new("UICorner")
+	local Icon = Instance.new("ImageLabel")
+	local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
+	local Title_2 = Instance.new("TextLabel")
+	local TextButton = Instance.new("TextButton")
+	local SliderTemplate = Instance.new("Frame")
+	local Title_3 = Instance.new("TextLabel")
+	local Slider = Instance.new("Frame")
+	local UICorner_5 = Instance.new("UICorner")
+	local Fill = Instance.new("Frame")
+	local UICorner_6 = Instance.new("UICorner")
+	local Hit = Instance.new("TextButton")
+	local DropdownTemplate = Instance.new("Frame")
+	local Title_4 = Instance.new("TextLabel")
+	local Dropdown = Instance.new("TextButton")
+	local UICorner_7 = Instance.new("UICorner")
+	local Frame_2 = Instance.new("Frame")
+	local Options = Instance.new("ScrollingFrame")
+	local UICorner_8 = Instance.new("UICorner")
+	local UIGridLayout = Instance.new("UIGridLayout")
+	local TableTemplate = Instance.new("Frame")
+	local UICorner_9 = Instance.new("UICorner")
+	local TopBar_2 = Instance.new("Frame")
+	local UICorner_10 = Instance.new("UICorner")
+	local Title_5 = Instance.new("TextLabel")
+	local Icon_2 = Instance.new("ImageLabel")
+	local UIAspectRatioConstraint_2 = Instance.new("UIAspectRatioConstraint")
+	local Frame_3 = Instance.new("Frame")
+	local Contents = Instance.new("Frame")
+	local Holder = Instance.new("Frame")
+	local UIListLayout_3 = Instance.new("UIListLayout")
+	local UICorner_11 = Instance.new("UICorner")
+	local ToggleTemplate = Instance.new("Frame")
+	local Toggle = Instance.new("TextButton")
+	local UICorner_12 = Instance.new("UICorner")
+	local UIAspectRatioConstraint_3 = Instance.new("UIAspectRatioConstraint")
+	local Title_6 = Instance.new("TextLabel")
+
+	--Properties:
+
+	ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+	ScreenGui.ResetOnSpawn = false
+
+	Main.Name = "Main"
+	Main.Parent = ScreenGui
+	Main.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
+	Main.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Main.BorderSizePixel = 0
+	Main.Position = UDim2.new(0.352497637, 0, 0.0439914167, 0)
+	Main.Size = UDim2.new(0.294533461, 0, 0.910944223, 0)
+
+	UICorner.Parent = Main
+
+	TopBar.Name = "TopBar"
+	TopBar.Parent = Main
+	TopBar.BackgroundColor3 = Color3.fromRGB(35, 33, 34)
+	TopBar.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	TopBar.BorderSizePixel = 0
+	TopBar.Size = UDim2.new(1, 0, 0.0671378076, 0)
+
+	UICorner_2.Parent = TopBar
+
+	Frame.Parent = TopBar
+	Frame.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
+	Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Frame.BorderSizePixel = 0
+	Frame.Position = UDim2.new(0, 0, 0.893939376, 0)
+	Frame.Size = UDim2.new(1, 0, 0.982456148, 0)
+
+	Title.Name = "Title"
+	Title.Parent = TopBar
+	Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Title.BackgroundTransparency = 1.000
+	Title.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Title.BorderSizePixel = 0
+	Title.Position = UDim2.new(0.0304000005, 0, 0.195124179, 0)
+	Title.Size = UDim2.new(0.319999993, 0, 0.578947365, 0)
+	Title.Font = Enum.Font.GothamMedium
+	Title.Text = params.Title
+	Title.TextColor3 = Color3.fromRGB(255, 156, 56)
+	Title.TextScaled = true
+	Title.TextSize = 14.000
+	Title.TextWrapped = true
+	Title.TextXAlignment = Enum.TextXAlignment.Left
+
+	TabHolder.Name = "TabHolder"
+	TabHolder.Parent = Main
+	TabHolder.BackgroundColor3 = Color3.fromRGB(37, 34, 36)
+	TabHolder.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	TabHolder.BorderSizePixel = 0
+	TabHolder.Position = UDim2.new(0.0192000009, 0, 0.124852769, 0)
+	TabHolder.Size = UDim2.new(0.961600006, 0, 0.859835088, 0)
+
+	UICorner_3.Parent = TabHolder
+
+	ScrollingFrame.Parent = TabHolder
+	ScrollingFrame.Active = true
+	ScrollingFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	ScrollingFrame.BackgroundTransparency = 1.000
+	ScrollingFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	ScrollingFrame.BorderSizePixel = 0
+	ScrollingFrame.Position = UDim2.new(0.0183028281, 0, 0.0123287672, 0)
+	ScrollingFrame.Size = UDim2.new(0.963394344, 0, 0.975342453, 0)
+	ScrollingFrame.ScrollBarThickness = 5
+
+	UIListLayout.Parent = ScrollingFrame
+	UIListLayout.Wraps = true
+	UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	UIListLayout.Padding = UDim.new(0.00999999978, 0)
+
+	Tabs.Name = "Tabs"
+	Tabs.Parent = Main
+	Tabs.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Tabs.BackgroundTransparency = 1.000
+	Tabs.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Tabs.BorderSizePixel = 0
+	Tabs.Position = UDim2.new(0.0192000009, 0, 0.0742049441, 0)
+	Tabs.Size = UDim2.new(0.961600006, 0, 0.0494699664, 0)
+
+	UIListLayout_2.Parent = Tabs
+	UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
+
+	Templates.Name = "Templates"
+	Templates.Parent = ScreenGui
+
+	TabTemplate.Name = "TabTemplate"
+	TabTemplate.Parent = Templates
+	TabTemplate.BackgroundColor3 = Color3.fromRGB(38, 38, 38)
+	TabTemplate.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	TabTemplate.BorderSizePixel = 0
+	TabTemplate.Position = UDim2.new(0.0116472542, 0, 0.189654961, 0)
+	TabTemplate.Size = UDim2.new(0.148086518, 0, 0.833333313, 0)
+	TabTemplate.Visible = false
+
+	UICorner_4.CornerRadius = UDim.new(0, 5)
+	UICorner_4.Parent = TabTemplate
+
+	Icon.Name = "Icon"
+	Icon.Parent = TabTemplate
+	Icon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Icon.BackgroundTransparency = 1.000
+	Icon.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Icon.BorderSizePixel = 0
+	Icon.Position = UDim2.new(0.0649999976, 0, 0.22857143, 0)
+	Icon.Size = UDim2.new(0.258426964, 0, 0.54285717, 0)
+	Icon.Image = "rbxassetid://16149081299"
+	Icon.ImageColor3 = Color3.fromRGB(188, 115, 41)
+
+	UIAspectRatioConstraint.Parent = Icon
+
+	Title_2.Name = "Title"
+	Title_2.Parent = TabTemplate
+	Title_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Title_2.BackgroundTransparency = 1.000
+	Title_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Title_2.BorderSizePixel = 0
+	Title_2.Position = UDim2.new(0.328271747, 0, 0.257142872, 0)
+	Title_2.Size = UDim2.new(0.584269643, 0, 0.485714287, 0)
+	Title_2.Font = Enum.Font.Gotham
+	Title_2.Text = "Test Tab"
+	Title_2.TextColor3 = Color3.fromRGB(255, 156, 56)
+	Title_2.TextScaled = true
+	Title_2.TextSize = 14.000
+	Title_2.TextWrapped = true
+	Title_2.TextXAlignment = Enum.TextXAlignment.Left
+
+	TextButton.Parent = TabTemplate
+	TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextButton.BackgroundTransparency = 1.000
+	TextButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	TextButton.BorderSizePixel = 0
+	TextButton.Size = UDim2.new(1, 0, 1, 0)
+	TextButton.Font = Enum.Font.SourceSans
+	TextButton.Text = ""
+	TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+	TextButton.TextSize = 14.000
+
+	SliderTemplate.Name = "SliderTemplate"
+	SliderTemplate.Parent = Templates
+	SliderTemplate.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	SliderTemplate.BackgroundTransparency = 1.000
+	SliderTemplate.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	SliderTemplate.BorderSizePixel = 0
+	SliderTemplate.Size = UDim2.new(1.00000012, 0, 0, 40)
+	SliderTemplate.Visible = false
+
+	Title_3.Name = "Title"
+	Title_3.Parent = SliderTemplate
+	Title_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Title_3.BackgroundTransparency = 1.000
+	Title_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Title_3.BorderSizePixel = 0
+	Title_3.Position = UDim2.new(0, 0, -0.00759724854, 0)
+	Title_3.Size = UDim2.new(1, 0, 0.4383986, 0)
+	Title_3.Font = Enum.Font.SourceSans
+	Title_3.Text = "Test Slider"
+	Title_3.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Title_3.TextSize = 14.000
+	Title_3.TextXAlignment = Enum.TextXAlignment.Left
+
+	Slider.Name = "Slider"
+	Slider.Parent = SliderTemplate
+	Slider.BackgroundColor3 = Color3.fromRGB(255, 156, 56)
+	Slider.BackgroundTransparency = 0.950
+	Slider.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Slider.BorderSizePixel = 0
+	Slider.Position = UDim2.new(-3.52259894e-06, 0, 0.41091603, 0)
+	Slider.Size = UDim2.new(0.996532917, 0, 0.433744699, 0)
+
+	UICorner_5.CornerRadius = UDim.new(0, 2)
+	UICorner_5.Parent = Slider
+
+	Fill.Name = "Fill"
+	Fill.Parent = Slider
+	Fill.BackgroundColor3 = Color3.fromRGB(255, 156, 56)
+	Fill.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Fill.BorderSizePixel = 0
+	Fill.Position = UDim2.new(2.4316796e-07, 0, 0, 0)
+	Fill.Size = UDim2.new(0.5, 0, 1, 0)
+
+	UICorner_6.CornerRadius = UDim.new(0, 2)
+	UICorner_6.Parent = Fill
+
+	Hit.Name = "Hit"
+	Hit.Parent = Slider
+	Hit.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Hit.BackgroundTransparency = 1.000
+	Hit.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Hit.BorderSizePixel = 0
+	Hit.Size = UDim2.new(1, 0, 1, 0)
+	Hit.Font = Enum.Font.SourceSans
+	Hit.Text = "50%"
+	Hit.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Hit.TextSize = 14.000
+
+	DropdownTemplate.Name = "DropdownTemplate"
+	DropdownTemplate.Parent = Templates
+	DropdownTemplate.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	DropdownTemplate.BackgroundTransparency = 1.000
+	DropdownTemplate.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	DropdownTemplate.BorderSizePixel = 0
+	DropdownTemplate.Size = UDim2.new(1.00000012, 0, 0, 40)
+	DropdownTemplate.Visible = false
+
+	Title_4.Name = "Title"
+	Title_4.Parent = DropdownTemplate
+	Title_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Title_4.BackgroundTransparency = 1.000
+	Title_4.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Title_4.BorderSizePixel = 0
+	Title_4.Position = UDim2.new(0, 0, -0.00759724854, 0)
+	Title_4.Size = UDim2.new(1, 0, 0.4383986, 0)
+	Title_4.Font = Enum.Font.SourceSans
+	Title_4.Text = "Test Dropdown"
+	Title_4.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Title_4.TextSize = 14.000
+	Title_4.TextXAlignment = Enum.TextXAlignment.Left
+
+	Dropdown.Name = "Dropdown"
+	Dropdown.Parent = DropdownTemplate
+	Dropdown.BackgroundColor3 = Color3.fromRGB(37, 32, 27)
+	Dropdown.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Dropdown.BorderSizePixel = 0
+	Dropdown.Position = UDim2.new(0, 0, 0.41091603, 0)
+	Dropdown.Size = UDim2.new(0.992685318, 0, 0.433744699, 0)
+	Dropdown.Font = Enum.Font.SourceSans
+	Dropdown.Text = "Dropdown"
+	Dropdown.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Dropdown.TextSize = 14.000
+
+	UICorner_7.CornerRadius = UDim.new(0, 5)
+	UICorner_7.Parent = Dropdown
+
+	Frame_2.Name = ""
+	Frame_2.Parent = Dropdown
+	Frame_2.BackgroundColor3 = Color3.fromRGB(37, 32, 27)
+	Frame_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Frame_2.BorderSizePixel = 0
+	Frame_2.Position = UDim2.new(0, 0, 1.00000024, 0)
+	Frame_2.Size = UDim2.new(1, 0, 0.287881792, 0)
+
+	Options.Name = "Options"
+	Options.Parent = DropdownTemplate
+	Options.Active = true
+	Options.BackgroundColor3 = Color3.fromRGB(37, 32, 27)
+	Options.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Options.BorderSizePixel = 0
+	Options.Position = UDim2.new(0, 0, 0.969528198, 0)
+	Options.Visible = false
+	Options.Size = UDim2.new(1, 0, 1.16399992, 0)
+
+	UICorner_8.CornerRadius = UDim.new(0, 2)
+	UICorner_8.Parent = Options
+
+	UIGridLayout.Parent = Options
+	UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	UIGridLayout.FillDirection  = Enum.FillDirection.Vertical
+	UIGridLayout.CellPadding = UDim2.new(0, 0, 0, 0)
+	UIGridLayout.CellSize = UDim2.new(1, 0, 1, 0)
+
+	TableTemplate.Name = "TableTemplate"
+	TableTemplate.Parent = Templates
+	TableTemplate.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
+	TableTemplate.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	TableTemplate.BorderSizePixel = 0
+	TableTemplate.Position = UDim2.new(0, 0, -4.28617675e-08, 0)
+	TableTemplate.Size = UDim2.new(0.494000047, 0, 0.235828787, 0)
+	TableTemplate.Visible = false
+
+	UICorner_9.Parent = TableTemplate
+
+	TopBar_2.Name = "TopBar"
+	TopBar_2.Parent = TableTemplate
+	TopBar_2.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
+	TopBar_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	TopBar_2.BorderSizePixel = 0
+	TopBar_2.Position = UDim2.new(0, 0, -3.98853047e-07, 0)
+	TopBar_2.ZIndex = 2
+	TopBar_2.Size = UDim2.new(1, 0, 0, 40)
+
+	UICorner_10.Parent = TopBar_2
+
+	Title_5.Name = "Title"
+	Title_5.Parent = TopBar_2
+	Title_5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Title_5.BackgroundTransparency = 1.000
+	Title_5.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Title_5.BorderSizePixel = 0
+	Title_5.Position = UDim2.new(0.120251589, 0, 0.30448404, 0)
+	Title_5.Size = UDim2.new(0.877624512, 0, 0.361223757, 0)
+	Title_5.Font = Enum.Font.Gotham
+	Title_5.Text = "Test Table"
+	Title_5.TextColor3 = Color3.fromRGB(255, 156, 56)
+	Title_5.TextScaled = true
+	Title_5.TextSize = 14.000
+	Title_5.TextWrapped = true
+	Title_5.TextXAlignment = Enum.TextXAlignment.Left
+
+	Icon_2.Name = "Icon"
+	Icon_2.Parent = TopBar_2
+	Icon_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Icon_2.BackgroundTransparency = 1.000
+	Icon_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Icon_2.BorderSizePixel = 0
+	Icon_2.Position = UDim2.new(0.0354885049, 0, 0.265226364, 0)
+	Icon_2.Size = UDim2.new(0.0707784444, 0, 0.454667211, 0)
+	Icon_2.Image = "rbxassetid://16149081299"
+	Icon_2.ImageColor3 = Color3.fromRGB(188, 115, 41)
+
+	UIAspectRatioConstraint_2.Parent = Icon_2
+
+	Frame_3.Name = ""
+	Frame_3.Parent = TopBar_2
+	Frame_3.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
+	Frame_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Frame_3.BorderSizePixel = 0
+	Frame_3.Position = UDim2.new(-0.0139847426, 0, 0.849999964, 0)
+	Frame_3.Size = UDim2.new(1.01389384, 0, 0.270928442, 0)
+	Frame_3.ZIndex = 2
+
+	Contents.Name = "Contents"
+	Contents.Parent = TableTemplate
+	Contents.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
+	Contents.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Contents.BorderSizePixel = 0
+	Contents.Position = UDim2.new(0, 0, 0.0995132998, 0)
+	Contents.Size = UDim2.new(1, 0, 0.900486708, 0)
+
+	Holder.Name = "Holder"
+	Holder.Parent = Contents
+	Holder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Holder.BackgroundTransparency = 1.000
+	Holder.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Holder.BorderSizePixel = 0
+	Holder.Position = UDim2.new(0.045454409, 0, 0.0728071481, 0)
+	Holder.Size = UDim2.new(0.909090996, 0, 0.853258133, 0)
+
+	UIListLayout_3.Parent = Holder
+	UIListLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
+
+	UICorner_11.Parent = Contents
+
+	ToggleTemplate.Name = "ToggleTemplate"
+	ToggleTemplate.Parent = Templates
+	ToggleTemplate.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	ToggleTemplate.BackgroundTransparency = 1.000
+	ToggleTemplate.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	ToggleTemplate.BorderSizePixel = 0
+	ToggleTemplate.Size = UDim2.new(1, 0, 0, 40)
+	ToggleTemplate.Visible = false
+
+	Toggle.Name = "Toggle"
+	Toggle.Parent = ToggleTemplate
+	Toggle.BackgroundColor3 = Color3.fromRGB(255, 156, 56)
+	Toggle.BackgroundTransparency = 0.950
+	Toggle.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Toggle.BorderSizePixel = 0
+	Toggle.Position = UDim2.new(-0.00384365232, 0, 0.265853882, 0)
+	Toggle.Size = UDim2.new(0.0624956042, 0, 0.477762282, 0)
+	Toggle.Font = Enum.Font.SourceSans
+	Toggle.Text = ""
+	Toggle.TextColor3 = Color3.fromRGB(0, 0, 0)
+	Toggle.TextSize = 14.000
+
+	UICorner_12.CornerRadius = UDim.new(0, 2)
+	UICorner_12.Parent = Toggle
+
+	UIAspectRatioConstraint_3.Parent = Toggle
+
+	Title_6.Name = "Title"
+	Title_6.Parent = ToggleTemplate
+	Title_6.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Title_6.BackgroundTransparency = 1.000
+	Title_6.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Title_6.BorderSizePixel = 0
+	Title_6.Position = UDim2.new(0.111542635, 0, 0.0968309566, 0)
+	Title_6.Size = UDim2.new(0.888457239, 0, 0.75804925, 0)
+	Title_6.Font = Enum.Font.SourceSans
+	Title_6.Text = "Test Toggle"
+	Title_6.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Title_6.TextSize = 14.000
+	Title_6.TextXAlignment = Enum.TextXAlignment.Left
+	
+	local UserInputService = game:GetService('UserInputService')
+
+	local frame = Main
+
+	local leadFrame = Instance.new('Frame') do
+		leadFrame.AnchorPoint = frame.AnchorPoint
+		leadFrame.Position = frame.Position
+		leadFrame.Size = frame.Size
+		leadFrame.Name = `Lead {frame.Name}`
+		leadFrame.Visible = false
+		leadFrame.Parent = frame.Parent
+	end
+
+	local screenGui = frame:FindFirstAncestorOfClass('ScreenGui')
+
+	local inputChanged = nil
+	local inputEnded = nil
+
+	local function getBoundsRelations(guiObject : GuiObject)
+		local bounds = screenGui.AbsoluteSize
+		local topLeft = screenGui.IgnoreGuiInset and guiObject.AbsolutePosition + Vector2.new(0, 36) or guiObject.AbsolutePosition
+		local bottomRight = topLeft + guiObject.AbsoluteSize
+
+		local boundRelations = {
+			Top = topLeft.Y < 0 and math.abs(topLeft.Y) or nil,
+			Left = topLeft.X < 0 and math.abs(topLeft.X) or nil,
+			Right = bottomRight.X > bounds.X and math.abs(bottomRight.X - bounds.X) or nil,
+			Bottom = bottomRight.Y > bounds.Y and math.abs(bottomRight.Y - bounds.Y) or nil,
+		}
+
+		return (not boundRelations.Top
+			and not boundRelations.Bottom
+			and not boundRelations.Left
+			and not boundRelations.Right), boundRelations
+	end
+
+	frame.InputBegan:Connect(function(inputObject : InputObject)
+		if inputObject.UserInputType == Enum.UserInputType.MouseButton1 then
+
+			local lastMousePosition = UserInputService:GetMouseLocation()
+			local goalPosition = frame.Position
+
+			inputChanged = UserInputService.InputChanged:Connect(function(input : InputObject, event : boolean)
+				if input.UserInputType == Enum.UserInputType.MouseMovement then
+					local currentMousePosition = UserInputService:GetMouseLocation()
+					local mouseDelta = currentMousePosition - lastMousePosition
+
+					goalPosition += UDim2.fromOffset(mouseDelta.X, mouseDelta.Y)
+
+					leadFrame.Position = goalPosition
+
+					local isInBounds, relations = getBoundsRelations(leadFrame)
+
+					if not isInBounds then
+						local x = (relations.Left or 0) - (relations.Right or 0)
+						local y = (relations.Top or 0) - (relations.Bottom or 0)
+
+						goalPosition += UDim2.fromOffset(x, y)
+					end
+
+					frame.Position = goalPosition
+					lastMousePosition = currentMousePosition
+				end
+			end)
+
+			inputEnded = frame.InputEnded:Connect(function(input : InputObject)
+				if input.UserInputType == Enum.UserInputType.MouseButton1 then
+					inputChanged:Disconnect()
+					inputChanged = nil
+
+					inputEnded:Disconnect()
+					inputEnded = nil
+				end
+			end)
+		end
+	end)
+
+	frame.Destroying:Once(function()
+
+		leadFrame = leadFrame:Destroy()
+
+		if inputChanged  then
+			inputChanged:Disconnect()
+			inputChanged = nil
+		end
+
+		if inputEnded then
+			inputEnded:Disconnect()
+			inputEnded = nil
+		end
+	end)
+
+	game.UserInputService.InputBegan:Connect(function(inp, gpe)
+		if gpe then return end
+		if inp.KeyCode == Enum.KeyCode[params.ToggleBind] then
+			frame.Visible = not frame.Visible
+		end
+	end)
+	
+	self.UI = Main
+	self.Templates = Templates
+end
+
+function lib:CreateTab(params: {Title: string, Icon: string})
+	if not self.UI then return end
+	
+	local new_tab = self.Templates.TabTemplate:Clone()
+	new_tab.Visible = true
+	new_tab.Title.Text = params.Title or "Tab"
+	new_tab.Icon.Image = params.Icon or ""
+	new_tab.Parent = self.UI.Tabs
+	
+	local Tab: Tab = {
+		Linked = new_tab;
+		Title = params.Title;
+		Icon = params.Icon;
+		Objects = {};
+	}
+	self.Flags[Tab.Title] = Tab
+	
+	Tab.Linked.TextButton.Activated:Connect(function()
+		self:LoadTab(Tab)
+	end)
+	
+	return Tab
+end
+
+function lib:CreateTable(tab: Tab, params: {Title: string, Icon: string})
+	local new_table = self.Templates.TableTemplate:Clone()
+	local top_bar = new_table.TopBar
+	top_bar.Title.Text = params.Title or "Window"
+	top_bar.Icon.Image = params.Icon or ""
+	new_table.Parent = self.UI.TabHolder.ScrollingFrame
+	
+	local Table: Table = {
+		Icon = params.Icon;
+		Linked = new_table;
+		Title = params.Title;
+		TotalY = 0;
+		Objects = {};
+	}
+	self.Flags[Table.Title] = Table
+	tab.Objects[Table.Title] = Table
+	table.insert(self.Tables, Table)
+	
+	return Table
+end
+
+function lib:CreateToggle(_table: Table, params: {Title: string, Default: boolean, Callback: () -> any})
+	local new_toggle = self.Templates.ToggleTemplate:Clone()
+	new_toggle.Visible = true
+	new_toggle.Title.Text = params.Title
+	new_toggle.Parent = _table.Linked.Contents.Holder
+	
+	local Toggle: Toggle = {
+		Linked = new_toggle;
+		Title = params.Title;
+		Value = not params.Default;
+		Callback = params.Callback;
+	}
+	self.Flags[Toggle.Title] = Toggle
+	table.insert(_table.Objects, Toggle)
+	
+	new_toggle.Toggle.Activated:Connect(function()
+		UpdateToggle(Toggle)
+		Toggle.Callback(Toggle.Value)
+	end)
+	UpdateToggle(Toggle)
+	UpdateTableSize(_table)
+	
+	return Toggle
+end
+
+function lib:CreateSlider(_table: Table, params: {Title: string, Measurement: string, Min: number, Max: number, Step: number, Callback: () -> any})
+	local new_slider = self.Templates.SliderTemplate:Clone()
+	new_slider.Title.Text = params.Title
+	new_slider.Visible = true
+	new_slider.Parent = _table.Linked.Contents.Holder
+	
+	local fill = new_slider.Slider.Fill
+	local handle = new_slider.Slider.Hit
+	
+	local dragging = false
+	
+	local Slider: Slider = {
+		Linked = new_slider;
+		Title = params.Title;
+		Measurement = params.Measurement;
+		Min = params.Min;
+		Max = params.Max;
+		Step = params.Step;
+		Value = 0;
+		Callback = params.Callback;
+	}
+	self.Flags[Slider.Title] = Slider
+	table.insert(_table.Objects, Slider)
+	
+	local function UpdateVisual(value)
+		local percent = value / Slider.Max
+		fill.Size = UDim2.new(percent, 0, 1, 0)
+		handle.Text = `{tostring(math.floor(value * 10) / 10)}{Slider.Measurement}`
+	end
+
+	local function UpdateFromInput(x)
+		local absPos = new_slider.AbsolutePosition.X
+		local absSize = new_slider.AbsoluteSize.X
+		local relative = math.clamp((x - absPos) / absSize, 0, 1)
+		local raw = relative * Slider.Max
+		local stepped = math.floor(raw / Slider.Step + 0.5) * Slider.Step
+		stepped = math.clamp(stepped, Slider.Min, Slider.Max)
+
+		Slider.Value = stepped
+		UpdateVisual(stepped)
+
+		if Slider.Callback then
+			coroutine.wrap(function()
+				Slider.Callback(stepped)
+			end)()
+		end
+	end
+	
+	local function BeginDrag(x)
+		dragging = true
+		UpdateFromInput(x)
+	end
+
+	local function EndDrag()
+		dragging = false
+	end
+
+	if handle then
+		handle.InputBegan:Connect(function(input)
+			if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+				BeginDrag(input.Position.X)
+			end
+		end)
+
+		handle.InputEnded:Connect(function(input)
+			if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+				EndDrag()
+			end
+		end)
+	end
+
+	if handle then
+		handle.InputBegan:Connect(function(input)
+			if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+				BeginDrag(input.Position.X)
+			end
+		end)
+
+		handle.InputEnded:Connect(function(input)
+			if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+				EndDrag()
+			end
+		end)
+	end
+
+	game:GetService("UserInputService").InputChanged:Connect(function(input)
+		if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+			UpdateFromInput(input.Position.X)
+		end
+	end)
+	
+	UpdateTableSize(_table)
+	
+	return Slider
+end
+
+function lib:CreateDropdown(_table: Table, params: {Title: string, Options: {}, Callback: () -> any})
+	if #params.Options > 5 then return end
+	
+	local new_dropdown = self.Templates.DropdownTemplate:Clone()
+	new_dropdown.Title.Text = params.Title
+	new_dropdown.Visible = true
+	new_dropdown.Parent = _table.Linked.Contents.Holder
+	
+	local Dropdown: Dropdown = {
+		Linked = new_dropdown;
+		Title = params.Title;
+		Options = {};
+		Value = nil;
+		Callback = params.Callback;
+	}
+	
+	local function equip_option(option)
+		print(option)
+		new_dropdown.Dropdown.Text = option.Title
+		Dropdown.Value = option.Value
+		
+		new_dropdown.Options.Visible = false
+		Dropdown.Callback(Dropdown.Value)
+	end
+	
+	local function create_option(option_data)
+		local new_option = Instance.new('TextButton')
+		new_option.TextColor3 = Color3.new(1, 0.611765, 0.219608)
+		new_option.BackgroundColor3 = Color3.new(0.101961, 0.101961, 0.101961)
+		new_option.BorderSizePixel = 0
+		new_option.Text = option_data.Title
+		new_option.TextScaled = true
+		new_option.Parent = Dropdown.Linked.Options
+		
+		local ui_corner = Instance.new('UICorner')
+		ui_corner.CornerRadius = UDim.new(0, 8)
+		ui_corner.Parent = new_option
+		
+		local Option: Option = {
+			Linked = new_option;
+			Title = option_data.Title;
+			Value = option_data.Value;
+		}
+		table.insert(Dropdown.Options, Option)
+		
+		new_dropdown.Options.UIGridLayout.CellSize = UDim2.new(1, 0, .85/#Dropdown.Options, 0)
+		
+		new_option.Activated:Connect(function()
+			equip_option(option_data)
+		end)
+	end
+	
+	for i, option in params.Options do
+		create_option(option)
+	end
+	equip_option(params.Options[1])
+	
+	self.Flags[Dropdown.Title] = Dropdown
+	table.insert(_table.Objects, Dropdown)
+	
+	new_dropdown.Dropdown.Activated:Connect(function()
+		new_dropdown.Options.Visible = not new_dropdown.Options.Visible
+	end)
+	
+	return Dropdown
+end
+
+function lib:LoadTab(tab: Tab)
+	for i, v in self.UI.TabHolder.ScrollingFrame:GetChildren() do
+		if v:IsA("GuiObject") then
+			v.Visible = false
+		end
+	end
+	
+	for i, object in tab.Objects do
+		object.Linked.Visible = true
+	end
+	
+	print(`Loaded tab({tab.Title}) and unloaded other tabs!`)
+end
+
+return self
