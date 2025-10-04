@@ -873,7 +873,7 @@ function lib:LoadTab(tab: Tab)
 		object.Linked.Visible = true
 	end
 	
-	print(``)
+	print(`Loaded tab({tab.Title}) and unloaded other tabs!`)
 end
 
 return self
