@@ -58,11 +58,11 @@ lib.Flags = {}
 
 function UpdateTableSize(_table: Table)
 	local linked = _table.Linked
-	local obj_height = 40
+	local obj_height = 20
 	local padding = 0
 	
-	_table.TotalY = #_table.Objects * (obj_height + padding)
-	linked.Size = UDim2.new(linked.Size.X.Scale, 0, 0, _table.TotalY*2.5)
+	local total_height = (#_table.Objects * obj_height) + ((#_table.Objects - 1) * padding)
+	linked.Holder.Size = UDim2.new(linked.Size.X.Scale, 0, 0, total_height*2.15)
 end
 
 function UpdateToggle(_toggle: Toggle)
@@ -88,50 +88,55 @@ function lib:CreateWindow(params: {Title: string, ToggleBind: string})
 	local TabHolder = Instance.new("Frame")
 	local UICorner_3 = Instance.new("UICorner")
 	local ScrollingFrame = Instance.new("ScrollingFrame")
-	local UIListLayout = Instance.new("UIListLayout")
 	local Tabs = Instance.new("Frame")
-	local UIListLayout_2 = Instance.new("UIListLayout")
+	local UIListLayout = Instance.new("UIListLayout")
 	local Templates = Instance.new("Folder")
-	local TabTemplate = Instance.new("Frame")
+	local TableTemplate = Instance.new("Frame")
 	local UICorner_4 = Instance.new("UICorner")
+	local TopBar_2 = Instance.new("Frame")
+	local UICorner_5 = Instance.new("UICorner")
+	local Title_2 = Instance.new("TextLabel")
 	local Icon = Instance.new("ImageLabel")
 	local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
-	local Title_2 = Instance.new("TextLabel")
-	local TextButton = Instance.new("TextButton")
-	local SliderTemplate = Instance.new("Frame")
-	local Title_3 = Instance.new("TextLabel")
-	local Slider = Instance.new("Frame")
-	local UICorner_5 = Instance.new("UICorner")
-	local Fill = Instance.new("Frame")
-	local UICorner_6 = Instance.new("UICorner")
-	local Hit = Instance.new("TextButton")
-	local DropdownTemplate = Instance.new("Frame")
-	local Title_4 = Instance.new("TextLabel")
-	local Dropdown = Instance.new("TextButton")
-	local UICorner_7 = Instance.new("UICorner")
 	local Frame_2 = Instance.new("Frame")
-	local Options = Instance.new("ScrollingFrame")
-	local UICorner_8 = Instance.new("UICorner")
-	local UIGridLayout = Instance.new("UIGridLayout")
-	local TableTemplate = Instance.new("Frame")
-	local UICorner_9 = Instance.new("UICorner")
-	local TopBar_2 = Instance.new("Frame")
-	local UICorner_10 = Instance.new("UICorner")
-	local Title_5 = Instance.new("TextLabel")
+	local Holder = Instance.new("Frame")
+	local Contents = Instance.new("Frame")
+	local Holder_2 = Instance.new("Frame")
+	local UIListLayout_2 = Instance.new("UIListLayout")
+	local UICorner_6 = Instance.new("UICorner")
+	local TabTemplate = Instance.new("Frame")
+	local UICorner_7 = Instance.new("UICorner")
 	local Icon_2 = Instance.new("ImageLabel")
 	local UIAspectRatioConstraint_2 = Instance.new("UIAspectRatioConstraint")
+	local Title_3 = Instance.new("TextLabel")
+	local TextButton = Instance.new("TextButton")
+	local SliderTemplate = Instance.new("Frame")
+	local Title_4 = Instance.new("TextLabel")
+	local Slider = Instance.new("Frame")
+	local UICorner_8 = Instance.new("UICorner")
+	local Fill = Instance.new("Frame")
+	local UICorner_9 = Instance.new("UICorner")
+	local Hit = Instance.new("TextButton")
+	local DropdownTemplate = Instance.new("Frame")
+	local Title_5 = Instance.new("TextLabel")
+	local Dropdown = Instance.new("TextButton")
+	local UICorner_10 = Instance.new("UICorner")
 	local Frame_3 = Instance.new("Frame")
-	local Contents = Instance.new("Frame")
-	local Holder = Instance.new("Frame")
-	local UIListLayout_3 = Instance.new("UIListLayout")
+	local Options = Instance.new("ScrollingFrame")
 	local UICorner_11 = Instance.new("UICorner")
+	local UIGridLayout = Instance.new("UIGridLayout")
 	local ToggleTemplate = Instance.new("Frame")
 	local Toggle = Instance.new("TextButton")
 	local UICorner_12 = Instance.new("UICorner")
 	local UIAspectRatioConstraint_3 = Instance.new("UIAspectRatioConstraint")
 	local Title_6 = Instance.new("TextLabel")
+	local UIGRIDLAYOUT = Instance.new('UIGridLayout')
 
 	--Properties:
+	
+	UIGRIDLAYOUT.CellPadding = UDim2.new(0.1, 0, 0.01, 0)
+	UIGRIDLAYOUT.CellSize = UDim2.new(0.45, 0, 0.25, 0)
+	UIGRIDLAYOUT.Parent = ScrollingFrame
 
 	ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 	ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
@@ -172,7 +177,7 @@ function lib:CreateWindow(params: {Title: string, ToggleBind: string})
 	Title.Position = UDim2.new(0.0304000005, 0, 0.195124179, 0)
 	Title.Size = UDim2.new(0.319999993, 0, 0.578947365, 0)
 	Title.Font = Enum.Font.GothamMedium
-	Title.Text = params.Title
+	Title.Text = "Library"
 	Title.TextColor3 = Color3.fromRGB(255, 156, 56)
 	Title.TextScaled = true
 	Title.TextSize = 14.000
@@ -194,15 +199,11 @@ function lib:CreateWindow(params: {Title: string, ToggleBind: string})
 	ScrollingFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	ScrollingFrame.BackgroundTransparency = 1.000
 	ScrollingFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	ScrollingFrame.CanvasSize = UDim2.new(0, 0, 1.75, 0)
 	ScrollingFrame.BorderSizePixel = 0
-	ScrollingFrame.Position = UDim2.new(0.0183028281, 0, 0.0123287672, 0)
-	ScrollingFrame.Size = UDim2.new(0.963394344, 0, 0.975342453, 0)
+	ScrollingFrame.Position = UDim2.new(0.025, 0, 0.025, 0)
+	ScrollingFrame.Size = UDim2.new(0.95, 0, 0.95, 0)
 	ScrollingFrame.ScrollBarThickness = 5
-
-	UIListLayout.Parent = ScrollingFrame
-	UIListLayout.Wraps = true
-	UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-	UIListLayout.Padding = UDim.new(0.00999999978, 0)
 
 	Tabs.Name = "Tabs"
 	Tabs.Parent = Main
@@ -213,11 +214,102 @@ function lib:CreateWindow(params: {Title: string, ToggleBind: string})
 	Tabs.Position = UDim2.new(0.0192000009, 0, 0.0742049441, 0)
 	Tabs.Size = UDim2.new(0.961600006, 0, 0.0494699664, 0)
 
-	UIListLayout_2.Parent = Tabs
-	UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
+	UIListLayout.Parent = Tabs
+	UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 
 	Templates.Name = "Templates"
 	Templates.Parent = ScreenGui
+
+	TableTemplate.Name = "TableTemplate"
+	TableTemplate.BackgroundTransparency = 1
+	TableTemplate.Parent = Templates
+	TableTemplate.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
+	TableTemplate.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	TableTemplate.BorderSizePixel = 0
+	TableTemplate.Size = UDim2.new(1, 0, 0.348278165, 0)
+	TableTemplate.Visible = false
+
+	UICorner_4.Parent = Holder
+
+	TopBar_2.Name = "TopBar"
+	TopBar_2.Parent = TableTemplate
+	TopBar_2.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
+	TopBar_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	TopBar_2.BorderSizePixel = 0
+	TopBar_2.Position = UDim2.new(0, 0, -3.98853047e-07, 0)
+	TopBar_2.Size = UDim2.new(1, 0, 0, 40)
+	TopBar_2.ZIndex = 2
+
+	UICorner_5.Parent = TopBar_2
+
+	Title_2.Name = "Title"
+	Title_2.Parent = TopBar_2
+	Title_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Title_2.BackgroundTransparency = 1.000
+	Title_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Title_2.BorderSizePixel = 0
+	Title_2.Position = UDim2.new(0.120251589, 0, 0.30448404, 0)
+	Title_2.Size = UDim2.new(0.877624512, 0, 0.361223757, 0)
+	Title_2.Font = Enum.Font.Gotham
+	Title_2.Text = "Test Table"
+	Title_2.TextColor3 = Color3.fromRGB(255, 156, 56)
+	Title_2.TextScaled = true
+	Title_2.TextSize = 14.000
+	Title_2.TextWrapped = true
+	Title_2.TextXAlignment = Enum.TextXAlignment.Left
+
+	Icon.Name = "Icon"
+	Icon.Parent = TopBar_2
+	Icon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Icon.BackgroundTransparency = 1.000
+	Icon.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Icon.BorderSizePixel = 0
+	Icon.Position = UDim2.new(0.0354885049, 0, 0.265226364, 0)
+	Icon.Size = UDim2.new(0.0707784444, 0, 0.454667211, 0)
+	Icon.Image = "rbxassetid://16149081299"
+	Icon.ImageColor3 = Color3.fromRGB(188, 115, 41)
+
+	UIAspectRatioConstraint.Parent = Icon
+
+	Frame_2.Name = ""
+	Frame_2.Parent = TopBar_2
+	Frame_2.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
+	Frame_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Frame_2.BorderSizePixel = 0
+	Frame_2.Position = UDim2.new(0, 0, 0.850000024, 0)
+	Frame_2.Size = UDim2.new(1, 0, 0.25, 0)
+	Frame_2.ZIndex = 2
+
+	Holder.Name = "Holder"
+	Holder.Parent = TableTemplate
+	Holder.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
+	Holder.BackgroundTransparency = 0
+	Holder.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Holder.BorderSizePixel = 0
+	Holder.Position = UDim2.new(0, 0, 0.115107559, 0)
+	Holder.Size = UDim2.new(1, 0, 0.884892464, 0)
+
+	Contents.Name = "Contents"
+	Contents.Parent = Holder
+	Contents.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	Contents.BackgroundTransparency = 1.000
+	Contents.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Contents.BorderSizePixel = 0
+	Contents.Size = UDim2.new(1, 0, 1, 0)
+
+	Holder_2.Name = "Holder"
+	Holder_2.Parent = Contents
+	Holder_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Holder_2.BackgroundTransparency = 1.000
+	Holder_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Holder_2.BorderSizePixel = 0
+	Holder_2.Position = UDim2.new(.025, 0, 0, 0)
+	Holder_2.Size = UDim2.new(.95, 0, 1, 0)
+
+	UIListLayout_2.Parent = Holder_2
+	UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
+
+	UICorner_6.Parent = Contents
 
 	TabTemplate.Name = "TabTemplate"
 	TabTemplate.Parent = Templates
@@ -228,37 +320,37 @@ function lib:CreateWindow(params: {Title: string, ToggleBind: string})
 	TabTemplate.Size = UDim2.new(0.148086518, 0, 0.833333313, 0)
 	TabTemplate.Visible = false
 
-	UICorner_4.CornerRadius = UDim.new(0, 5)
-	UICorner_4.Parent = TabTemplate
+	UICorner_7.CornerRadius = UDim.new(0, 5)
+	UICorner_7.Parent = TabTemplate
 
-	Icon.Name = "Icon"
-	Icon.Parent = TabTemplate
-	Icon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	Icon.BackgroundTransparency = 1.000
-	Icon.BorderColor3 = Color3.fromRGB(0, 0, 0)
-	Icon.BorderSizePixel = 0
-	Icon.Position = UDim2.new(0.0649999976, 0, 0.22857143, 0)
-	Icon.Size = UDim2.new(0.258426964, 0, 0.54285717, 0)
-	Icon.Image = "rbxassetid://16149081299"
-	Icon.ImageColor3 = Color3.fromRGB(188, 115, 41)
+	Icon_2.Name = "Icon"
+	Icon_2.Parent = TabTemplate
+	Icon_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Icon_2.BackgroundTransparency = 1.000
+	Icon_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Icon_2.BorderSizePixel = 0
+	Icon_2.Position = UDim2.new(0.0649999976, 0, 0.22857143, 0)
+	Icon_2.Size = UDim2.new(0.258426964, 0, 0.54285717, 0)
+	Icon_2.Image = "rbxassetid://16149081299"
+	Icon_2.ImageColor3 = Color3.fromRGB(188, 115, 41)
 
-	UIAspectRatioConstraint.Parent = Icon
+	UIAspectRatioConstraint_2.Parent = Icon_2
 
-	Title_2.Name = "Title"
-	Title_2.Parent = TabTemplate
-	Title_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	Title_2.BackgroundTransparency = 1.000
-	Title_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-	Title_2.BorderSizePixel = 0
-	Title_2.Position = UDim2.new(0.328271747, 0, 0.257142872, 0)
-	Title_2.Size = UDim2.new(0.584269643, 0, 0.485714287, 0)
-	Title_2.Font = Enum.Font.Gotham
-	Title_2.Text = "Test Tab"
-	Title_2.TextColor3 = Color3.fromRGB(255, 156, 56)
-	Title_2.TextScaled = true
-	Title_2.TextSize = 14.000
-	Title_2.TextWrapped = true
-	Title_2.TextXAlignment = Enum.TextXAlignment.Left
+	Title_3.Name = "Title"
+	Title_3.Parent = TabTemplate
+	Title_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Title_3.BackgroundTransparency = 1.000
+	Title_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Title_3.BorderSizePixel = 0
+	Title_3.Position = UDim2.new(0.328271747, 0, 0.257142872, 0)
+	Title_3.Size = UDim2.new(0.584269643, 0, 0.485714287, 0)
+	Title_3.Font = Enum.Font.Gotham
+	Title_3.Text = "Test Tab"
+	Title_3.TextColor3 = Color3.fromRGB(255, 156, 56)
+	Title_3.TextScaled = true
+	Title_3.TextSize = 14.000
+	Title_3.TextWrapped = true
+	Title_3.TextXAlignment = Enum.TextXAlignment.Left
 
 	TextButton.Parent = TabTemplate
 	TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -280,19 +372,19 @@ function lib:CreateWindow(params: {Title: string, ToggleBind: string})
 	SliderTemplate.Size = UDim2.new(1.00000012, 0, 0, 40)
 	SliderTemplate.Visible = false
 
-	Title_3.Name = "Title"
-	Title_3.Parent = SliderTemplate
-	Title_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	Title_3.BackgroundTransparency = 1.000
-	Title_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
-	Title_3.BorderSizePixel = 0
-	Title_3.Position = UDim2.new(0, 0, -0.00759724854, 0)
-	Title_3.Size = UDim2.new(1, 0, 0.4383986, 0)
-	Title_3.Font = Enum.Font.SourceSans
-	Title_3.Text = "Test Slider"
-	Title_3.TextColor3 = Color3.fromRGB(255, 255, 255)
-	Title_3.TextSize = 14.000
-	Title_3.TextXAlignment = Enum.TextXAlignment.Left
+	Title_4.Name = "Title"
+	Title_4.Parent = SliderTemplate
+	Title_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Title_4.BackgroundTransparency = 1.000
+	Title_4.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Title_4.BorderSizePixel = 0
+	Title_4.Position = UDim2.new(0, 0, -0.00759724854, 0)
+	Title_4.Size = UDim2.new(1, 0, 0.4383986, 0)
+	Title_4.Font = Enum.Font.SourceSans
+	Title_4.Text = "Test Slider"
+	Title_4.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Title_4.TextSize = 14.000
+	Title_4.TextXAlignment = Enum.TextXAlignment.Left
 
 	Slider.Name = "Slider"
 	Slider.Parent = SliderTemplate
@@ -303,8 +395,8 @@ function lib:CreateWindow(params: {Title: string, ToggleBind: string})
 	Slider.Position = UDim2.new(-3.52259894e-06, 0, 0.41091603, 0)
 	Slider.Size = UDim2.new(0.996532917, 0, 0.433744699, 0)
 
-	UICorner_5.CornerRadius = UDim.new(0, 2)
-	UICorner_5.Parent = Slider
+	UICorner_8.CornerRadius = UDim.new(0, 2)
+	UICorner_8.Parent = Slider
 
 	Fill.Name = "Fill"
 	Fill.Parent = Slider
@@ -314,8 +406,8 @@ function lib:CreateWindow(params: {Title: string, ToggleBind: string})
 	Fill.Position = UDim2.new(2.4316796e-07, 0, 0, 0)
 	Fill.Size = UDim2.new(0.5, 0, 1, 0)
 
-	UICorner_6.CornerRadius = UDim.new(0, 2)
-	UICorner_6.Parent = Fill
+	UICorner_9.CornerRadius = UDim.new(0, 2)
+	UICorner_9.Parent = Fill
 
 	Hit.Name = "Hit"
 	Hit.Parent = Slider
@@ -338,19 +430,19 @@ function lib:CreateWindow(params: {Title: string, ToggleBind: string})
 	DropdownTemplate.Size = UDim2.new(1.00000012, 0, 0, 40)
 	DropdownTemplate.Visible = false
 
-	Title_4.Name = "Title"
-	Title_4.Parent = DropdownTemplate
-	Title_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	Title_4.BackgroundTransparency = 1.000
-	Title_4.BorderColor3 = Color3.fromRGB(0, 0, 0)
-	Title_4.BorderSizePixel = 0
-	Title_4.Position = UDim2.new(0, 0, -0.00759724854, 0)
-	Title_4.Size = UDim2.new(1, 0, 0.4383986, 0)
-	Title_4.Font = Enum.Font.SourceSans
-	Title_4.Text = "Test Dropdown"
-	Title_4.TextColor3 = Color3.fromRGB(255, 255, 255)
-	Title_4.TextSize = 14.000
-	Title_4.TextXAlignment = Enum.TextXAlignment.Left
+	Title_5.Name = "Title"
+	Title_5.Parent = DropdownTemplate
+	Title_5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Title_5.BackgroundTransparency = 1.000
+	Title_5.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Title_5.BorderSizePixel = 0
+	Title_5.Position = UDim2.new(0, 0, -0.00759724854, 0)
+	Title_5.Size = UDim2.new(1, 0, 0.4383986, 0)
+	Title_5.Font = Enum.Font.SourceSans
+	Title_5.Text = "Test Dropdown"
+	Title_5.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Title_5.TextSize = 14.000
+	Title_5.TextXAlignment = Enum.TextXAlignment.Left
 
 	Dropdown.Name = "Dropdown"
 	Dropdown.Parent = DropdownTemplate
@@ -364,16 +456,16 @@ function lib:CreateWindow(params: {Title: string, ToggleBind: string})
 	Dropdown.TextColor3 = Color3.fromRGB(255, 255, 255)
 	Dropdown.TextSize = 14.000
 
-	UICorner_7.CornerRadius = UDim.new(0, 5)
-	UICorner_7.Parent = Dropdown
+	UICorner_10.CornerRadius = UDim.new(0, 2)
+	UICorner_10.Parent = Dropdown
 
-	Frame_2.Name = ""
-	Frame_2.Parent = Dropdown
-	Frame_2.BackgroundColor3 = Color3.fromRGB(37, 32, 27)
-	Frame_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-	Frame_2.BorderSizePixel = 0
-	Frame_2.Position = UDim2.new(0, 0, 1.00000024, 0)
-	Frame_2.Size = UDim2.new(1, 0, 0.287881792, 0)
+	Frame_3.Name = ""
+	Frame_3.Parent = Dropdown
+	Frame_3.BackgroundColor3 = Color3.fromRGB(37, 32, 27)
+	Frame_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Frame_3.BorderSizePixel = 0
+	Frame_3.Position = UDim2.new(0, 0, 1.00000024, 0)
+	Frame_3.Size = UDim2.new(1, 0, 0.287881792, 0)
 
 	Options.Name = "Options"
 	Options.Parent = DropdownTemplate
@@ -382,101 +474,15 @@ function lib:CreateWindow(params: {Title: string, ToggleBind: string})
 	Options.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	Options.BorderSizePixel = 0
 	Options.Position = UDim2.new(0, 0, 0.969528198, 0)
-	Options.Visible = false
-	Options.ZIndex = 5
-	Options.Size = UDim2.new(1, 0, 1.16399992, 0)
+	Options.Size = UDim2.new(1.01899803, 0, 1.16399992, 0)
 
-	UICorner_8.CornerRadius = UDim.new(0, 2)
-	UICorner_8.Parent = Options
+	UICorner_11.CornerRadius = UDim.new(0, 2)
+	UICorner_11.Parent = Options
 
 	UIGridLayout.Parent = Options
 	UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
-	UIGridLayout.FillDirection  = Enum.FillDirection.Vertical
 	UIGridLayout.CellPadding = UDim2.new(0, 0, 0, 0)
 	UIGridLayout.CellSize = UDim2.new(1, 0, 1, 0)
-
-	TableTemplate.Name = "TableTemplate"
-	TableTemplate.Parent = Templates
-	TableTemplate.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
-	TableTemplate.BorderColor3 = Color3.fromRGB(0, 0, 0)
-	TableTemplate.BorderSizePixel = 0
-	TableTemplate.Position = UDim2.new(0, 0, -4.28617675e-08, 0)
-	TableTemplate.Size = UDim2.new(0.494000047, 0, 0.235828787, 0)
-	TableTemplate.Visible = false
-
-	UICorner_9.Parent = TableTemplate
-
-	TopBar_2.Name = "TopBar"
-	TopBar_2.Parent = TableTemplate
-	TopBar_2.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
-	TopBar_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-	TopBar_2.BorderSizePixel = 0
-	TopBar_2.Position = UDim2.new(0, 0, -3.98853047e-07, 0)
-	TopBar_2.ZIndex = 2
-	TopBar_2.Size = UDim2.new(1, 0, 0, 40)
-
-	UICorner_10.Parent = TopBar_2
-
-	Title_5.Name = "Title"
-	Title_5.Parent = TopBar_2
-	Title_5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	Title_5.BackgroundTransparency = 1.000
-	Title_5.BorderColor3 = Color3.fromRGB(0, 0, 0)
-	Title_5.BorderSizePixel = 0
-	Title_5.Position = UDim2.new(0.120251589, 0, 0.30448404, 0)
-	Title_5.Size = UDim2.new(0.877624512, 0, 0.361223757, 0)
-	Title_5.Font = Enum.Font.Gotham
-	Title_5.Text = "Test Table"
-	Title_5.TextColor3 = Color3.fromRGB(255, 156, 56)
-	Title_5.TextScaled = true
-	Title_5.TextSize = 14.000
-	Title_5.TextWrapped = true
-	Title_5.TextXAlignment = Enum.TextXAlignment.Left
-
-	Icon_2.Name = "Icon"
-	Icon_2.Parent = TopBar_2
-	Icon_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	Icon_2.BackgroundTransparency = 1.000
-	Icon_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-	Icon_2.BorderSizePixel = 0
-	Icon_2.Position = UDim2.new(0.0354885049, 0, 0.265226364, 0)
-	Icon_2.Size = UDim2.new(0.0707784444, 0, 0.454667211, 0)
-	Icon_2.Image = "rbxassetid://16149081299"
-	Icon_2.ImageColor3 = Color3.fromRGB(188, 115, 41)
-
-	UIAspectRatioConstraint_2.Parent = Icon_2
-
-	Frame_3.Name = ""
-	Frame_3.Parent = TopBar_2
-	Frame_3.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
-	Frame_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
-	Frame_3.BorderSizePixel = 0
-	Frame_3.Position = UDim2.new(-0.0139847426, 0, 0.849999964, 0)
-	Frame_3.Size = UDim2.new(1.01389384, 0, 0.270928442, 0)
-	Frame_3.ZIndex = 2
-
-	Contents.Name = "Contents"
-	Contents.Parent = TableTemplate
-	Contents.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
-	Contents.BorderColor3 = Color3.fromRGB(0, 0, 0)
-	Contents.BorderSizePixel = 0
-	Contents.Position = UDim2.new(0, 0, 0.0995132998, 0)
-	Contents.Size = UDim2.new(1, 0, 0.900486708, 0)
-
-	Holder.Name = "Holder"
-	Holder.Parent = Contents
-	Holder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	Holder.BackgroundTransparency = 1
-	Holder.BorderColor3 = Color3.fromRGB(0, 0, 0)
-	Holder.BorderSizePixel = 0
-	Holder.Position = UDim2.new(0.045, 0, .07, 0)
-	Holder.Size = UDim2.new(0.909090996, 0, .75, 0)
-
-	UIListLayout_3.Parent = Holder
-	UIListLayout_3.Padding = UDim.new(0, 0)
-	UIListLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
-
-	UICorner_11.Parent = Contents
 
 	ToggleTemplate.Name = "ToggleTemplate"
 	ToggleTemplate.Parent = Templates
@@ -493,7 +499,7 @@ function lib:CreateWindow(params: {Title: string, ToggleBind: string})
 	Toggle.BackgroundTransparency = 0.950
 	Toggle.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	Toggle.BorderSizePixel = 0
-	Toggle.Position = UDim2.new(-0.00384365232, 0, 0.265853882, 0)
+	Toggle.Position = UDim2.new(-0.00384362554, 0, 0.315853894, 0)
 	Toggle.Size = UDim2.new(0.0624956042, 0, 0.477762282, 0)
 	Toggle.Font = Enum.Font.SourceSans
 	Toggle.Text = ""
@@ -671,7 +677,7 @@ function lib:CreateToggle(_table: Table, params: {Title: string, Default: boolea
 	local new_toggle = self.Templates.ToggleTemplate:Clone()
 	new_toggle.Visible = true
 	new_toggle.Title.Text = params.Title
-	new_toggle.Parent = _table.Linked.Contents.Holder
+	new_toggle.Parent = _table.Linked.Holder.Contents.Holder
 	
 	local Toggle: Toggle = {
 		Linked = new_toggle;
@@ -696,7 +702,7 @@ function lib:CreateSlider(_table: Table, params: {Title: string, Measurement: st
 	local new_slider = self.Templates.SliderTemplate:Clone()
 	new_slider.Title.Text = params.Title
 	new_slider.Visible = true
-	new_slider.Parent = _table.Linked.Contents.Holder
+	new_slider.Parent = _table.Linked.Holder.Contents.Holder
 	
 	local fill = new_slider.Slider.Fill
 	local handle = new_slider.Slider.Hit
@@ -794,7 +800,7 @@ function lib:CreateDropdown(_table: Table, params: {Title: string, Options: {}, 
 	local new_dropdown = self.Templates.DropdownTemplate:Clone()
 	new_dropdown.Title.Text = params.Title
 	new_dropdown.Visible = true
-	new_dropdown.Parent = _table.Linked.Contents.Holder
+	new_dropdown.Parent = _table.Linked.Holder.Contents.Holder
 	
 	local Dropdown: Dropdown = {
 		Linked = new_dropdown;
@@ -803,6 +809,10 @@ function lib:CreateDropdown(_table: Table, params: {Title: string, Options: {}, 
 		Value = nil;
 		Callback = params.Callback;
 	}
+	self.Flags[Dropdown.Title] = Dropdown
+	table.insert(_table.Objects, Dropdown)
+	
+	UpdateTableSize(_table)
 	
 	local function equip_option(option)
 		print(option)
@@ -845,9 +855,6 @@ function lib:CreateDropdown(_table: Table, params: {Title: string, Options: {}, 
 	end
 	equip_option(params.Options[1])
 	
-	self.Flags[Dropdown.Title] = Dropdown
-	table.insert(_table.Objects, Dropdown)
-	
 	new_dropdown.Dropdown.Activated:Connect(function()
 		new_dropdown.Options.Visible = not new_dropdown.Options.Visible
 	end)
@@ -866,7 +873,7 @@ function lib:LoadTab(tab: Tab)
 		object.Linked.Visible = true
 	end
 	
-	print(`Loaded tab({tab.Title}) and unloaded other tabs!`)
+	print(``)
 end
 
 return self
