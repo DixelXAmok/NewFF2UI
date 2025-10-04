@@ -177,7 +177,7 @@ function lib:CreateWindow(params: {Title: string, ToggleBind: string})
 	Title.Position = UDim2.new(0.0304000005, 0, 0.195124179, 0)
 	Title.Size = UDim2.new(0.319999993, 0, 0.578947365, 0)
 	Title.Font = Enum.Font.GothamMedium
-	Title.Text = "Library"
+	Title.Text = params.Title
 	Title.TextColor3 = Color3.fromRGB(255, 156, 56)
 	Title.TextScaled = true
 	Title.TextSize = 14.000
