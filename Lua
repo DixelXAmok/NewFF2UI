@@ -178,7 +178,7 @@ function lib:CreateWindow(params: {Title: string, ToggleBind: string})
 	Title.Size = UDim2.new(0.319999993, 0, 0.578947365, 0)
 	Title.Font = Enum.Font.GothamMedium
 	Title.Text = params.Title
-	Title.TextColor3 = Color3.fromRGB(255, 156, 56)
+	Title.TextColor3 = Color3.fromRGB(255, 0, 0)
 	Title.TextScaled = true
 	Title.TextSize = 14.000
 	Title.TextWrapped = true
@@ -252,7 +252,7 @@ function lib:CreateWindow(params: {Title: string, ToggleBind: string})
 	Title_2.Size = UDim2.new(0.877624512, 0, 0.361223757, 0)
 	Title_2.Font = Enum.Font.Gotham
 	Title_2.Text = "Test Table"
-	Title_2.TextColor3 = Color3.fromRGB(255, 100, 100)
+	Title_2.TextColor3 = Color3.fromRGB(255, 0, 0)
 	Title_2.TextScaled = true
 	Title_2.TextSize = 14.000
 	Title_2.TextWrapped = true
@@ -267,7 +267,7 @@ function lib:CreateWindow(params: {Title: string, ToggleBind: string})
 	Icon.Position = UDim2.new(0.0354885049, 0, 0.265226364, 0)
 	Icon.Size = UDim2.new(0.0707784444, 0, 0.454667211, 0)
 	Icon.Image = "rbxassetid://16149081299"
-	Icon.ImageColor3 = Color3.fromRGB(188, 115, 41)
+	Icon.ImageColor3 = Color3.fromRGB(255, 0, 0)
 
 	UIAspectRatioConstraint.Parent = Icon
 
@@ -332,7 +332,7 @@ function lib:CreateWindow(params: {Title: string, ToggleBind: string})
 	Icon_2.Position = UDim2.new(0.0649999976, 0, 0.22857143, 0)
 	Icon_2.Size = UDim2.new(0.258426964, 0, 0.54285717, 0)
 	Icon_2.Image = "rbxassetid://16149081299"
-	Icon_2.ImageColor3 = Color3.fromRGB(188, 115, 41)
+	Icon_2.ImageColor3 = Color3.fromRGB(255, 0, 0)
 
 	UIAspectRatioConstraint_2.Parent = Icon_2
 
@@ -346,7 +346,7 @@ function lib:CreateWindow(params: {Title: string, ToggleBind: string})
 	Title_3.Size = UDim2.new(0.584269643, 0, 0.485714287, 0)
 	Title_3.Font = Enum.Font.Gotham
 	Title_3.Text = "Test Tab"
-	Title_3.TextColor3 = Color3.fromRGB(255, 100, 100)
+	Title_3.TextColor3 = Color3.fromRGB(255, 0, 0)
 	Title_3.TextScaled = true
 	Title_3.TextSize = 14.000
 	Title_3.TextWrapped = true
@@ -400,7 +400,7 @@ function lib:CreateWindow(params: {Title: string, ToggleBind: string})
 
 	Fill.Name = "Fill"
 	Fill.Parent = Slider
-	Fill.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
+	Fill.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
 	Fill.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	Fill.BorderSizePixel = 0
 	Fill.Position = UDim2.new(2.4316796e-07, 0, 0, 0)
@@ -495,7 +495,7 @@ function lib:CreateWindow(params: {Title: string, ToggleBind: string})
 
 	Toggle.Name = "Toggle"
 	Toggle.Parent = ToggleTemplate
-	Toggle.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
+	Toggle.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
 	Toggle.BackgroundTransparency = 0.950
 	Toggle.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	Toggle.BorderSizePixel = 0
