@@ -252,7 +252,7 @@ function lib:CreateWindow(params: {Title: string, ToggleBind: string})
 	Title_2.Size = UDim2.new(0.877624512, 0, 0.361223757, 0)
 	Title_2.Font = Enum.Font.Gotham
 	Title_2.Text = "Test Table"
-	Title_2.TextColor3 = Color3.fromRGB(255, 156, 56)
+	Title_2.TextColor3 = Color3.fromRGB(255, 100, 100)
 	Title_2.TextScaled = true
 	Title_2.TextSize = 14.000
 	Title_2.TextWrapped = true
@@ -346,7 +346,7 @@ function lib:CreateWindow(params: {Title: string, ToggleBind: string})
 	Title_3.Size = UDim2.new(0.584269643, 0, 0.485714287, 0)
 	Title_3.Font = Enum.Font.Gotham
 	Title_3.Text = "Test Tab"
-	Title_3.TextColor3 = Color3.fromRGB(255, 156, 56)
+	Title_3.TextColor3 = Color3.fromRGB(255, 100, 100)
 	Title_3.TextScaled = true
 	Title_3.TextSize = 14.000
 	Title_3.TextWrapped = true
@@ -388,7 +388,7 @@ function lib:CreateWindow(params: {Title: string, ToggleBind: string})
 
 	Slider.Name = "Slider"
 	Slider.Parent = SliderTemplate
-	Slider.BackgroundColor3 = Color3.fromRGB(255, 156, 56)
+	Slider.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
 	Slider.BackgroundTransparency = 0.950
 	Slider.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	Slider.BorderSizePixel = 0
@@ -400,7 +400,7 @@ function lib:CreateWindow(params: {Title: string, ToggleBind: string})
 
 	Fill.Name = "Fill"
 	Fill.Parent = Slider
-	Fill.BackgroundColor3 = Color3.fromRGB(255, 156, 56)
+	Fill.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
 	Fill.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	Fill.BorderSizePixel = 0
 	Fill.Position = UDim2.new(2.4316796e-07, 0, 0, 0)
@@ -495,7 +495,7 @@ function lib:CreateWindow(params: {Title: string, ToggleBind: string})
 
 	Toggle.Name = "Toggle"
 	Toggle.Parent = ToggleTemplate
-	Toggle.BackgroundColor3 = Color3.fromRGB(255, 156, 56)
+	Toggle.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
 	Toggle.BackgroundTransparency = 0.950
 	Toggle.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	Toggle.BorderSizePixel = 0
